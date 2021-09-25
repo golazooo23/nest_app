@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { CatsModule } from './cats/cats.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { Cat } from './cats/cat'
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       username: 'root',
       password: '',
       database: 'nest_app',
-      entities: [],
+      entities: [Cat],
       synchronize: false,
     }),
     CatsModule,
