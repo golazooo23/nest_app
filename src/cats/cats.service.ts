@@ -3,6 +3,7 @@ import { Cat } from './cat'
 import { NewCatInput } from './dto/newCat.input'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { Owner } from '../owners/owner'
 
 @Injectable()
 export class CatsService {
@@ -19,8 +20,9 @@ export class CatsService {
     return this.catsRepostiory.findOne(id)
   }
 
-  async create(data: NewCatInput): Promise<Cat> {
-    const cat = this.catsRepostiory.create(data)
+  async create(params: { cat: NewCatInput; owner: Owner }): Promise<Cat> {
+    const cat = this.catsRepostiory.create(params.cat)
+    cat.owner = params.owner
     await this.catsRepostiory.save(cat)
     return cat
   }

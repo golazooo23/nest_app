@@ -3,6 +3,7 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { Cat } from './cat'
 import { CatsService } from './cats.service'
 import { NewCatInput } from './dto/newCat.input'
+import { Owner } from '../owners/owner'
 
 @Resolver((of) => Cat)
 export class CatsResolver {
@@ -23,7 +24,7 @@ export class CatsResolver {
   }
 
   @Mutation((returns) => Cat)
-  addCat(@Args('newCat') newCat: NewCatInput): Promise<Cat> {
+  addCat(@Args('newCat') newCat: { cat: NewCatInput; owner: Owner }): Promise<Cat> {
     return this.catsService.create(newCat)
   }
 

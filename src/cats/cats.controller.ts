@@ -6,10 +6,10 @@ import { Cat } from './cat'
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
-  @Post()
-  async create(@Body() createCatDto: any) {
-    this.catsService.create(createCatDto)
-  }
+  // @Post()
+  // async create(@Body() createCatDto: any) {
+  //   this.catsService.create(createCatDto)
+  // }
 
   @Get()
   async findAll(): Promise<Cat[]> {

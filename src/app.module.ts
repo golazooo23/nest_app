@@ -3,7 +3,8 @@ import { CatsModule } from './cats/cats.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Cat } from './cats/cat'
-import { Owner } from './owner/owner'
+import { Owner } from './owners/owner'
+import { OwnersModule } from './owners/owners.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { Owner } from './owner/owner'
       synchronize: true,
     }),
     CatsModule,
+    OwnersModule,
   ],
 })
 export class AppModule {}
