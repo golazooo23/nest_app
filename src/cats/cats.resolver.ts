@@ -1,12 +1,14 @@
-import { NotFoundException } from '@nestjs/common'
+import { NotFoundException, Inject } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Injector } from '@nestjs/core/injector/injector'
 import { Cat } from './cat'
 import { CatsService } from './cats.service'
 import { NewCatInput } from './dto/newCat.input'
+import { Owner } from '../owners/owner'
 
 @Resolver((of) => Cat)
 export class CatsResolver {
-  constructor(private catsService: CatsService) {}
+  constructor(@Inject(CatsService) private catsService: CatsService) {}
 
   @Query((returns) => [Cat])
   cats(): Promise<Cat[]> {
@@ -22,10 +24,10 @@ export class CatsResolver {
     return cat
   }
 
-  @Mutation((returns) => Cat)
-  addCat(@Args('newCat') newCat: NewCatInput): Promise<Cat> {
-    return this.catsService.create(newCat)
-  }
+  // @Mutation((returns) => Cat)
+  // async addCat(@Args('newCat') newCat: NewCatInput) {
+  //   return await this.catsService.create(newCat)
+  // }
 
   @Mutation((returns) => Boolean)
   async removeCat(@Args({ name: 'id', type: () => Int }) id: number) {

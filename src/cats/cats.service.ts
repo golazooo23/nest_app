@@ -3,12 +3,14 @@ import { Cat } from './cat'
 import { NewCatInput } from './dto/newCat.input'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { OwnersService } from '../owners/owners.service'
 
 @Injectable()
 export class CatsService {
   constructor(
     @InjectRepository(Cat)
     private catsRepostiory: Repository<Cat>,
+    private ownersService: OwnersService,
   ) {}
 
   findAll(): Promise<Cat[]> {
@@ -19,10 +21,12 @@ export class CatsService {
     return this.catsRepostiory.findOne(id)
   }
 
-  async create(data: NewCatInput): Promise<Cat> {
-    const cat = this.catsRepostiory.create(data)
-    await this.catsRepostiory.save(cat)
-    return cat
+  async create({ ownerId, ...payload }: NewCatInput) {
+    const owner = await this.ownersService.findOneById(ownerId)
+    // const cat =
+    // cat.owner = params.owner
+    // await this.catsRepostiory.save(cat)
+    return await this.catsRepostiory.save({ ...payload, owner })
   }
 
   async remove(id: number): Promise<boolean> {
