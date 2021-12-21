@@ -28,13 +28,12 @@ type Query {
 
 input addCatType {
   newCat: NewCatInput
-  owner: Owner
+#  owner: Owner
 }
 
 type Mutation {
-  addCat(params: addCatType!): Cat!
+  addCat(newCat: NewCatInput!): Cat!
   removeCat(id: Int!): Boolean!
-  addOwner(newOwner: NewOwnerInput!): Owner!
 }
 
 input NewCatInput {
